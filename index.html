@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/json2/20121008/json2.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.0/backbone-min.js"></script>
+
+<style type="text/css">
+	#search-box{width: 50%;float: left; padding: 20px; box-sizing: border-box; }
+	#search-box input{width: 300px;}
+</style>
+</head>
+<script>
+	$().ready(function(){
+		_.templateSettings = {
+        interpolate : /\{\{(.+?)\}\}/g,
+        evaluate : /\{!(.+?)!\}/g
+    };
+
+    window.templates = {};
+    templates.videoTemplate = _.template( $("#videoTemplate").html() );
+
+
+	});
+</script>
+<body>
+ <div id="search-box">
+ 	<p>Buscar: <input type="text"><button>buscar</button></p>
+ 	<div id="videos"></div>
+ </div>
+ <div id="favorits"></div>
+
+<script id="videoTemplate" type="text/template">
+	<div>
+		<h4>{{ title }}</h4>
+		<img src="{{ thumb }}"/>
+		<span class="favorite">Favorito</span>
+	</div>
+</script>  
+
+</body>
+</html>
