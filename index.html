@@ -14,12 +14,47 @@
 </style>
 </head>
 <script>
-	$().ready(function(){
-		_.templateSettings = {
-        interpolate : /\{\{(.+?)\}\}/g,
-        evaluate : /\{!(.+?)!\}/g
-    };
+	//clase general de la vista	
+	window.SearchView = Backbone.View.extend({
+		//interacciones
+		events:{
+			"click button": "search"
+		},
 
+
+		//Como empieza
+		initialize: function(config){
+			//elemento en DOM de la vista
+			this.$el;
+			this.$el = config.$el;
+		},
+		//como se muestra al usario
+		render:function(){},
+
+		search:function(event){
+			debugger;
+		}
+
+	});
+
+
+
+
+
+
+
+
+
+	$().ready(function(){
+		
+		//Instancia con quien va interactuar el usuario
+		window.searchBox = new window.SearchView({
+			$el: $("#search-box")
+		});
+
+
+	//Uso de templates de underscore
+	_.templateSettings = {interpolate : /\{\{(.+?)\}\}/g, evaluate : /\{!(.+?)!\}/g };
     window.templates = {};
     templates.videoTemplate = _.template( $("#videoTemplate").html() );
 
