@@ -18,7 +18,8 @@
 	window.SearchView = Backbone.View.extend({
 		//interacciones
 		events:{
-			"click button": "search"
+			"click button": "search",
+			"keypress input": "keyHandler"
 		},
 
 
@@ -32,15 +33,22 @@
 		render:function(){},
 
 		search:function(event){
-			debugger;
-		}
+			//PROCESO DE BUSQUEDA :: GUARDA EL VALOR DE BUSQUEDA Y LUEGO LIMPIA
+			var value = this.$el.find("input").val();
+			this.$el.find("input").val("");
+			//console.log("el valor a buscar es " + value);
+		},
+
+		keyHandler:function(event){
+
+			if(event.which === 13){
+				//ejecuta la funcion de la vista
+				this.search();
+			}
+
+		},
 
 	});
-
-
-
-
-
 
 
 
