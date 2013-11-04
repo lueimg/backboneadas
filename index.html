@@ -36,8 +36,13 @@
 			//CUANDO SE AGREGE UNA ELEMENTO A LA COLECCION QUE LA VISTA HAGA ALGO
 			this.collection.on("add",function (model){
 				//console.log(model.toJSON());
-				var videoHTML = window.templates.videoTemplate(model.toJSON());
-				self.$el.find("#videos").prepend(videoHTML);
+				// var videoHTML = window.templates.videoTemplate(model.toJSON());
+				// self.$el.find("#videos").prepend(videoHTML);
+				var videoView = new window.VideoView(model);
+				videoView.render();
+				self.$el.find("#videos").prepend(videoView.$el);
+				
+
 			});
 
 
@@ -110,6 +115,31 @@
 		}
 
 	});
+
+	window.VideoView = Backbone.View.extend({
+		initialize: function(model){
+			var self = this;
+			this.model = model;
+
+			//escuchando los eventos del modelo
+			//CUADO USO model.set("title","nuevo titulo")
+			//EL DOM SE ACTUALIZA
+			this.model.on("change",function(){
+				self.render();
+			});
+
+
+			this.model.on("destroy",function(){
+				self.remove();
+			});
+
+		},
+		render : function(){
+			var videoHTML = window.templates.videoTemplate( this.model.toJSON() );
+			this.$el.html(videoHTML);
+		}
+	});
+
 
 
 	$().ready(function(){
