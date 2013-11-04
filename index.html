@@ -140,6 +140,29 @@
 		}
 	});
 
+	window.RedditCollection = window.SearchCollection.extend({
+		search:function(value){
+			var self = this;
+			self.empty();
+
+			var reddit = $.getJSON("http://www.reddit.com/search.json?q="+value+"&jsonp=?");
+			reddit.done(function(response){
+				var threads = response.data.children.map(function(item){
+					return {
+						title: item.data.title,
+						thumb: item.data.thumbnail
+					}
+				});
+
+				threads.forEach(function(threadData){
+					self.add(threadData)
+				});
+
+			});
+		}
+	});
+
+
 
 
 	$().ready(function(){
@@ -149,7 +172,9 @@
 		//window.searchCollection.add({title:"luis",thumb:"foto"})
 		//window.searchCollection.length
 		//window.searchCollection.last().toJSON()
+		
 		window.searchCollection = new window.SearchCollection({});
+		//window.searchCollection = new window.RedditCollection({});
 		
 		//Instancia con quien va interactuar el usuario
 		//a la instancia le pasamos un elemento del DOM y una coleccion a usar
