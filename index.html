@@ -71,8 +71,12 @@
 
 	});
 
+	window.SearchModel = Backbone.Model.extend({
+		foo: function(){}
+	});
+
 	window.SearchCollection = Backbone.Collection.extend({
-		
+		model:window.SearchModel,
 		search: function(value){
 			
 			var self = this;
