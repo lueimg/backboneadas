@@ -37,6 +37,33 @@
 			var value = this.$el.find("input").val();
 			this.$el.find("input").val("");
 			//console.log("el valor a buscar es " + value);
+
+			self = this;
+
+			self.$el.find("#videos").html("");
+
+			//PIDIENDO INFORMACION A YOUTUBE
+			var youtube = $.getJSON("http://gdata.youtube.com/feeds/videos?vq="+value+"&max-results=10&alt=json-in-script&callback=?")
+
+			youtube.done(function(data){
+				//debugger;
+				var videos = data.feed.entry.map(function(item){
+					return {
+						title: item.title.$t,
+						thumb: item.media$group.media$thumbnail[0].url
+					}
+
+				});
+				//console.log(videos[0]);
+				videos.forEach(function(videoData){
+					var videoHTML = window.templates.videoTemplate(videoData);
+
+					self.$el.find("#videos").prepend(videoHTML);
+
+
+				});
+
+			});
 		},
 
 		keyHandler:function(event){
